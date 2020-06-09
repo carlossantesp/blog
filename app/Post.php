@@ -33,4 +33,9 @@ class Post extends Model
     {
         return $query->where('slug',$slug)->first();
     }
+
+    public function getColorStatusAttribute()
+    {
+        return $this->status === 'publish' ? 'success' : 'warning' ;
+    }
 }

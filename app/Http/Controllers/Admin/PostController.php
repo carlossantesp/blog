@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
+use App\Category;
 use App\Post;
 use App\Tag;
-use Illuminate\Support\Facades\Storage;
-
-// use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,16 +19,16 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::where('user_id', auth()->id())->latest()->paginate(10);
+        $posts = Post::with('category')->where('user_id', auth()->id())->latest()->paginate(10);
         return view('admin.posts.index', compact('posts'));
     }
 
     public function create()
     {
-        $categories = Category::oldest('name')->get(['name','id']);
-        $tags = Tag::oldest('name')->get();
+        $categories = Category::oldest('name')->pluck('name', 'id');
+        $tags = Tag::oldest('name')->get(['id','name']);
 
-        return view('admin.posts.create', compact('categories','tags'));
+        return view('admin.posts.create', ['categories'=>$categories,'tags'=>$tags,'post' => new Post ]);
     }
 
     public function store(PostStoreRequest $request)
@@ -62,8 +59,8 @@ class PostController extends Controller
     {
         $this->authorize('pass', $post);
 
-        $categories = Category::oldest('name')->get(['name','id']);
-        $tags = Tag::oldest('name')->get();
+        $categories = Category::oldest('name')->pluck('name', 'id');
+        $tags = Tag::oldest('name')->get(['id','name']);
         $post->load('tags');
         
         return view('admin.posts.edit',compact('post','categories','tags'));

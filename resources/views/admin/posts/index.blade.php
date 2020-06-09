@@ -28,14 +28,14 @@
                   <td>{{ $post->name }}</td>
                   <td>{{ Str::limit($post->excerpt,50) }}</td>
                   <td>{{ $post->category->name }}</td>
-                  <td class="text-uppercase"><span class="badge badge-pill badge-{{ $post->status == 'publish' ? 'primary' : 'secondary'}}">{{ __($post->status) }}</span></td>
+                  <td class="text-uppercase"><span class="badge badge-pill badge-{{ $post->color_status }}">{{ __($post->status) }}</span></td>
                   <td>
                     @include('admin.posts.partials.actions')
                   </td>
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="4">
+                  <td colspan="6">
                     <em class="text-center">No tienes entradas creadas</em>
                   </td>
                 </tr>

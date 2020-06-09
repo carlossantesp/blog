@@ -4,7 +4,6 @@
   <div class="container-fluid">
     <form action="{{ route('posts.update', $post->id) }}" method="POST"  enctype="multipart/form-data">
       @method('PUT')
-      @csrf
       <div class="row justify-content-center">
         <div class="col-md-8">
           <div class="card">
@@ -22,11 +21,7 @@
                 <h5 class="card-title m-0">Configuración</h5>
               </div>
               <div class="card-body">
-                @include('admin.posts.partials.form-adicional')
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary mr-4">Actualizar</button>
-                  <a href="{{ route('posts.index') }}" class="btn btn-secondary">Volver atrás</a>
-                </div>
+                @include('admin.posts.partials.form-adicional',['btnText' => 'Actualizar'])
               </div>
             </div>
           </div>
