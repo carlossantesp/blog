@@ -11,13 +11,9 @@
           </div>
           <div class="card-body">
             <form action="{{ route('categories.store') }}" method="POST">
-              @csrf
-              
-              @include('admin.categories.partials.form')
 
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Registrar Categoria</button>
-              </div>
+              @include('admin.categories.partials.form',['btnText' => 'Registrar Categoria'])
+
             </form>
           </div>
         </div>
