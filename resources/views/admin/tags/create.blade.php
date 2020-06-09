@@ -9,15 +9,11 @@
             <h5 class="card-title m-0">Creación de Etiqueta</h5>
             <a href="{{ route('tags.index') }}" class="btn btn-link">Volver atrás</a>
           </div>
-          <div class="card-body" id="form-app">
+          <div class="card-body">
             <form action="{{ route('tags.store') }}" method="POST">
-              @csrf
 
-              @include('admin.tags.partials.form')
+              @include('admin.tags.partials.form',['btnText' => 'Registrar Etiqueta'])
 
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Registrar Etiqueta</button>
-              </div>
             </form>
           </div>
         </div>

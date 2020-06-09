@@ -7,8 +7,6 @@ use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
 use App\Tag;
 
-// use Illuminate\Http\Request;
-
 class TagController extends Controller
 {
 
@@ -26,7 +24,7 @@ class TagController extends Controller
 
     public function create()
     {
-        return view('admin.tags.create');
+        return view('admin.tags.create', ['tag' => new Tag]);
     }
 
     public function store(TagStoreRequest $request)

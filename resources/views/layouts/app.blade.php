@@ -80,9 +80,9 @@
                 </div>
             </div>
         </nav>
+        @include('layouts.partials.messages')
 
         <main class="py-4">
-            @include('layouts.partials.messages')
             @yield('content')
         </main>
     </div>
