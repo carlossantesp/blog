@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Category;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
-use App\Category;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
-
-    public function __construct(Category $category)
-    {
-        $this->middleware('auth');
-        $this->category = $category;
-    }
-
     public function index()
     {
         $categories = Category::latest()->paginate(10);
@@ -29,9 +22,8 @@ class CategoryController extends Controller
 
     public function store(CategoryStoreRequest $request)
     {
-        $inputs = $request->all();
-        $this->category->create($inputs);
-        
+        Category::create($request->all());
+
         return redirect()->route('categories.index')->withSuccess('Categoria creada correctamente');
     }
 
@@ -47,8 +39,7 @@ class CategoryController extends Controller
 
     public function update(CategoryUpdateRequest $request, Category $category)
     {
-        $inputs = $request->all();
-        $category->update($inputs);
+        $category->update($request->all());
 
         return redirect()->route('categories.index')->withSuccess('Categoria actualizada correctamente');
     }

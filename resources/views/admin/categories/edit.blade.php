@@ -10,7 +10,7 @@
             <a href="{{ route('categories.index') }}" class="btn btn-link">Volver atrás</a>
           </div>
           <div class="card-body">
-            <form action="{{ route('categories.update', $category->id) }}" method="POST">
+            <form action="{{ route('categories.update', $category->slug) }}" method="POST">
               @method('PUT')
 
               @include('admin.categories.partials.form', ['btnText' => 'Actualizar Categoria'])

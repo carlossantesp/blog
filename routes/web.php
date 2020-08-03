@@ -26,7 +26,7 @@ Route::get('categorias/{slug}', 'Web\PageController@category')->name('category')
 Route::get('etiquetas/{slug}', 'Web\PageController@tag')->name('tag');
 
 //admin
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware('auth')->group(function(){
   Route::resource('tags', 'Admin\TagController');
   Route::resource('categories', 'Admin\CategoryController');
   Route::resource('posts', 'Admin\PostController');
