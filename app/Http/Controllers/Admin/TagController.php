@@ -9,13 +9,6 @@ use App\Tag;
 
 class TagController extends Controller
 {
-
-    public function __construct(Tag $tag)
-    {
-        $this->middleware('auth');
-        $this->tag = $tag;
-    }
-
     public function index()
     {
         $tags = Tag::latest()->paginate(10);
@@ -29,9 +22,8 @@ class TagController extends Controller
 
     public function store(TagStoreRequest $request)
     {
-        $inputs = $request->all();
-        $this->tag->create($inputs);
-        
+        Tag::create($request->all());
+
         return redirect()->route('tags.index')->withSuccess('Etiqueta creada correctamente');
     }
 

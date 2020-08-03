@@ -10,7 +10,7 @@
             <a href="{{ route('tags.index') }}" class="btn btn-link">Volver atrás</a>
           </div>
           <div class="card-body">
-            <form action="{{ route('tags.update', $tag->id) }}" method="POST">
+            <form action="{{ route('tags.update', $tag->slug) }}" method="POST">
               @method('PUT')
 
               @include('admin.tags.partials.form',['btnText' => 'Actualizar Etiqueta'])
