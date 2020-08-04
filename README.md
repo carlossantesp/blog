@@ -67,7 +67,7 @@ Crear las migraciones de las tablas de la base de datos
 $ php artisan migrate
 ```
 
-> Si desea cargar datos por defectos al final del comando agregar `--seed`
+> Si desea cargar datos de prueba puede ejecutar comando `php artisan db:seed`, este creara varios usuarios de prueba uno de esos es `admin.laravel@example.com` y password `password`
 
 ### Iniciar el servidor
 
@@ -78,3 +78,13 @@ $ php artisan serve
 ```
 
 > La dirección del servidor es [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+#### Aclaración
+Las imagenes se guardan el la carpeta `/storage/app/public/posts-images` por antes de subir imagenes para las entradas (posts) ejecute el siguiente comando en la terminal
+```bash
+$ php artisan storage:link
+```
+
+Esto crear un link (enlace simbolico) en la carpeta `/public/storage`
+
+>**Nota** .- La imagen `default.jpg` no viene incluida en el projecto debe crear una y colocarlo en la carpeta `/storage/app/public/posts-images` para que en los datos de prueba pueda visualizar la imagen de prueba.
