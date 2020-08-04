@@ -1,5 +1,6 @@
 <?php
 
+use App\Post;
 use Illuminate\Database\Seeder;
 
 class PostsTableSeeder extends Seeder
@@ -11,7 +12,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Post::class,200)->create()->each(function(App\Post $post){
+        factory(Post::class,100)->create()->each(function(Post $post){
             $post->tags()->attach([
                 rand(1,5),
                 rand(6,14),
