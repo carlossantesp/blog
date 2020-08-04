@@ -11,7 +11,7 @@ class Post extends Model
     ];
 
     protected $dates = ['created_at'];
-    
+
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -19,9 +19,14 @@ class Post extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
-    
+
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function syncTags($values)
+    {
+        $this->tags()->sync($values);
     }
 
     public function scopeisPublish()

@@ -12,73 +12,75 @@ use App\Tag;
 
 class PostController extends Controller
 {
+    protected $categories, $tags;
+
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->categories = Category::oldest('name')->pluck('name', 'id');
+        $this->tags = Tag::oldest('name')->get(['id','name']);
     }
 
     public function index()
     {
-        $posts = Post::with('category')->where('user_id', auth()->id())->latest()->paginate(10);
+        $posts = request()->user()->posts()->with(['category'])->latest()->paginate(10);
         return view('admin.posts.index', compact('posts'));
     }
 
     public function create()
     {
-        $categories = Category::oldest('name')->pluck('name', 'id');
-        $tags = Tag::oldest('name')->get(['id','name']);
-
-        return view('admin.posts.create', ['categories'=>$categories,'tags'=>$tags,'post' => new Post ]);
+        return view('admin.posts.create', [
+            'categories'=>$this->categories,
+            'tags'=>$this->tags,
+            'post' => new Post
+        ]);
     }
 
     public function store(PostStoreRequest $request)
     {
-        $inputs = $request->all();
-        $post = Post::create($inputs);
+        $post = new Post($request->all());
 
-        // IMAGE
-        if($request->file('file')){
-            $path = Storage::disk('image')->put('img/posts-images', $request->file('file'));
-            $post->file = $path;
-            $post->save();
-        }
-        // TAGS
-        $post->tags()->attach($inputs['tags']);
-        
+        if($request->hasFile('file'))
+            $post->file = $request->file('file')->store('posts-images');
+
+        $post->save();
+
+        $post->syncTags($request->tags);
+
         return redirect()->route('posts.index')->withSuccess('Entrada creada correctamente');
     }
 
     public function show(Post $post)
     {
         $this->authorize('pass', $post);
-        $post->load('user','category','tags');
-        return view('admin.posts.show',compact('post'));
+
+        return view('admin.posts.show',[
+            'post'=>$post->load('user','category','tags')
+        ]);
     }
 
     public function edit(Post $post)
     {
         $this->authorize('pass', $post);
 
-        $categories = Category::oldest('name')->pluck('name', 'id');
-        $tags = Tag::oldest('name')->get(['id','name']);
-        $post->load('tags');
-        
-        return view('admin.posts.edit',compact('post','categories','tags'));
+        return view('admin.posts.edit', [
+            'categories'=>$this->categories,
+            'tags'=>$this->tags,
+            'post' => $post->load('tags')
+        ]);
     }
 
     public function update(PostUpdateRequest $request, Post $post)
     {
-        $inputs = $request->all();
-        $post->update($inputs);
+        $post->fill($request->all());
 
-        // IMAGE
-        if($request->file('file')){
-            $path = Storage::disk('image')->put('img/posts-images', $request->file('file'));
-            $post->file = $path;
-            $post->save();
+        if($request->hasFile('file')){
+            Storage::delete($post->file);
+            $post->file = $request->file('file')->store('posts-images');
         }
-        // TAGS
-        $post->tags()->sync($inputs['tags']);
+
+        $post->save();
+
+        $post->syncTags($request->tags);
 
         return redirect()->route('posts.index')->withSuccess('Entrada actualizada correctamente');
     }
@@ -86,7 +88,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('pass', $post);
-        
+
+        Storage::delete($post->file);
+
         $post->delete();
 
         return back()->withSuccess('La entrada fue eliminada correctamente');

@@ -16,7 +16,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'slug' => Str::slug($title),
         'excerpt' => $faker->text(200),
         'body' => $faker->text(500),
-        'file' => "img/posts-images/{$fileName}",
+        'file' => "posts-images/{$fileName}",
         'status' => $faker->randomElement(['draft','publish']),
     ];
 });

@@ -27,7 +27,11 @@
 
 <div class="form-group">
   <label for="file">Imagen de portada</label>
-  <input type="file" name="file" class="form-control @error('file') is-invalid @enderror">
+  <div class="custom-file @error('file') is-invalid @enderror"">
+    <input name="file" type="file" class="custom-file-input" id="file">
+    <label class="custom-file-label" for="file">Seleccionar una imagen</label>
+  </div>
+  {{-- <input type="file" name="file" class="form-control @error('file') is-invalid @enderror"> --}}
   @error('file')
     <span class="invalid-feedback" role="alert">
       <strong>{{ $message }}</strong>
@@ -37,7 +41,7 @@
 
 @isset ($post->file)
   <div class="form-group">
-    <img src="{{ asset($post->file) }}" alt="" class="img-fluid">
+    <img src="{{ asset('/storage/' . $post->file) }}" alt="" class="img-fluid">
   </div>
 @endisset
 

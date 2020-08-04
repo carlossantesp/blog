@@ -10,7 +10,7 @@
           </div>
           <div class="card-body">
             @isset($post->file)
-              <img src="{{ asset($post->file) }}" class="img-fluid">
+              <img src="{{ asset('/storage/' . $post->file) }}" class="img-fluid">
               <hr>
             @endisset
             <dl class="row">
@@ -21,7 +21,7 @@
               <dt class="col-md-3">Extracto de la entrada</dt>
               <dd class="col-md-9">{{ $post->excerpt }}</dd>
               <dt class="col-md-12">Contenido de la entrada</dt>
-              <dd class="col-md-12">{{ $post->body }}</dd>
+              <dd class="col-md-12">{!! $post->body !!}</dd>
             </dl>
           </div>
         </div>
@@ -36,7 +36,7 @@
               <dt class="col-md-3">Categoria</dt>
               <dd class="col-md-9">{{ $post->category->name }}</dd>
               <dt class="col-md-3">Estado</dt>
-              <dd class="col-md-9 text-uppercase"><span class="badge badge-pill badge-{{ $post->status == 'publish' ? 'primary' : 'secondary'}}">{{ __($post->status) }}</span></dd>
+              <dd class="col-md-9 text-uppercase"><span class="badge badge-pill badge-{{ $post->color_status }}">{{ __($post->status) }}</span></dd>
               <dt class="col-md-3">Etiquetas</dt>
               <dd class="col-md-9">
                 @forelse ($post->tags as $tag)

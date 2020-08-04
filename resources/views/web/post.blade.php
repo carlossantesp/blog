@@ -7,7 +7,7 @@
         <h1>{{ $post->name }}</h1>
         <div class="card">
           @isset($post->file)
-            <img src="{{ asset($post->file) }}" alt="" class="img-fluid card-img-top">
+            <img src="{{ asset('/storage/' . $post->file) }}" alt="" class="img-fluid card-img-top">
           @endisset
           <div class="card-body">
             <p class="text-muted"><i class="far fa-calendar-alt"></i> {{ $post->created_at->format('d M Y') }}</p>
@@ -15,7 +15,7 @@
               <i class="fas fa-folder-open pr-3"></i>
               <a href="{{ route('category', $post->category->slug) }}" class="card-link">{{ $post->category->name }}</a>
             </h6>
-            
+
             <p class="card-text">{{ $post->excerpt }}</p>
             <hr>
             {!! $post->body !!}

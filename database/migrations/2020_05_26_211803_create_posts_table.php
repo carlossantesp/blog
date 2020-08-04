@@ -23,7 +23,7 @@ class CreatePostsTable extends Migration
             $table->mediumText('excerpt')->nullable();
             $table->text('body');
             $table->enum('status',['draft','publish'])->default('draft');
-            $table->string('file',128)->nullable();
+            $table->string('file',128)->default('posts-images/default.jpg');
             $table->timestamps();
         });
     }
