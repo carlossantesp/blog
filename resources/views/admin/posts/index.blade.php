@@ -32,10 +32,10 @@
                 </div>
             </div>
         @empty
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
-                        <em class="text-center">No tienes entradas creadas</em>
+                    <div class="card-body text-center">
+                        <em>No tienes entradas creadas</em>
                     </div>
                 </div>
             </div>

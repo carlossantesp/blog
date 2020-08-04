@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/','blog');
 
 //logueo y registro
-Auth::routes();
+Auth::routes(['verify' => false, 'confirm' => false, 'email'=>false, 'reset'=>false]);
 
 //web
-Route::get('blog', 'Web\PageController@blog')->name('blog');
-Route::get('entrada/{slug}', 'Web\PageController@post')->name('post');
-Route::get('categorias/{slug}', 'Web\PageController@category')->name('category');
-Route::get('etiquetas/{slug}', 'Web\PageController@tag')->name('tag');
+Route::get('blog', 'Web\PageController')->name('blog');
+Route::get('entrada/{slug}', 'Web\PagePostController')->name('post');
+Route::get('categorias/{category}', 'Web\PageCategoriesController')->name('category');
+Route::get('etiquetas/{tag}', 'Web\PageTagsController')->name('tag');
 
 //admin
 Route::prefix('admin')->middleware('auth')->group(function(){

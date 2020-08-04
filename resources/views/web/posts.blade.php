@@ -8,7 +8,7 @@
         @forelse ($posts as $post)
         <div class="card mb-4">
           @isset($post->file)
-            <img src="{{ asset('/storage/' . $post->file) }}" alt="" class="img-fluid card-img-top">
+            <img src="{{ asset('/storage/' . $post->file) }}" alt="{{ $post->name }}" class="img-fluid card-img-top" style="height: 300px; object-fit: cover">
           @endisset
           <div class="card-body">
             <h5 class="card-title">{{ $post->name }}</h5>
