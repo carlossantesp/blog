@@ -16,7 +16,7 @@ Realizar los siguientes comandos:
 Clona el repositorio
 
 ```bash
-$ git remote add origin https://github.com/carlossantesp/blog.git
+$ git clone https://github.com/carlossantesp/blog.git
 ```
 
 Instala los paquetes de composer
@@ -81,6 +81,7 @@ $ php artisan serve
 
 #### Aclaración
 Las imagenes se guardan el la carpeta `/storage/app/public/posts-images` por antes de subir imagenes para las entradas (posts) ejecute el siguiente comando en la terminal
+
 ```bash
 $ php artisan storage:link
 ```
